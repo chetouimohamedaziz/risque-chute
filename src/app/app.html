@@ -1,0 +1,19 @@
+<mat-toolbar class="header">
+  <span class="header__title">{{ appWording.appTitle }}</span>
+  <span class="header__slogan">{{ appWording.selogan }}</span>
+</mat-toolbar>
+
+<main class="page-content">
+  <section class="description">
+    <span class="description__title">{{ appWording.appTitle }}</span> {{ appWording.description }}
+  </section>
+
+  <section class="privacy-card">
+    <h2>{{ appWording.privacyTitle }}</h2>
+    <p>{{ appWording.privacyText }}</p>
+  </section>
+</main>
+
+<footer class="footer">
+  <span>© {{ appWording.appTitle }} - {{ appWording.appVersion }}</span>
+</footer>

@@ -1,0 +1,72 @@
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--mat-sys-primary-container);
+  color: var(--mat-sys-primary);
+
+  &__title {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-right: 0.5rem;
+  }
+
+  &__slogan {
+    font-weight: 500;
+    font-size: 0.9rem;
+  }
+}
+
+.page-content {
+  padding: 1.5rem 1rem 80px;
+  display: grid;
+  gap: 1rem;
+}
+
+.description {
+  color: var(--mat-sys-on-surface);
+  line-height: 1.6;
+}
+
+.description__title {
+  font-weight: bold;
+}
+
+.description p {
+  margin: 0;
+}
+
+.privacy-card {
+  background-color: var(--mat-sys-error-container);
+  color: var(--mat-sys-on-error-container);
+  border-radius: 16px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.privacy-card h2 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
+}
+
+.privacy-card p {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1rem;
+  font-size: 0.85rem;
+  opacity: 0.9;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  line-height: 60px;
+  background-color: rgba(255, 255, 255, 0.95);
+}
