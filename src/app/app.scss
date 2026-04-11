@@ -5,22 +5,91 @@
   background-color: var(--mat-sys-primary-container);
   color: var(--mat-sys-primary);
 
+  &__content {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  &__logo {
+    height: 40px;
+    width: auto;
+  }
+
   &__title {
     font-size: 1.4rem;
     font-weight: bold;
-    margin-right: 0.5rem;
+    color: #14365c;
   }
 
   &__slogan {
     font-weight: 500;
     font-size: 0.9rem;
+    margin-left: 1rem;
+    color: #14365c;
   }
 }
 
+.screen-card {
+  margin: 1.5rem auto 2rem;
+  max-width: 900px;
+  width: min(100%, 900px);
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: 24px;
+  overflow: hidden;
+  background-color: var(--mat-sys-surface);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+}
+
 .page-content {
-  padding: 1.5rem 1rem 80px;
+  padding: 2rem;
   display: grid;
   gap: 1rem;
+}
+
+.questionnaire {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.recommendations-section {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+.recommendations-list {
+  margin-top: 0.5rem;
+}
+
+.recommendations-button {
+  padding: 1rem 2rem !important;
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  border-radius: 12px;
+  background-color: #e3f2fd !important;
+  color: var(--mat-sys-primary) !important;
+  border: 2px solid var(--mat-sys-primary) !important;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover:not(:disabled) {
+    background-color: var(--mat-sys-primary-container) !important;
+    box-shadow: 0 4px 12px rgba(25, 118, 210, 0.2);
+    transform: translateY(-1px);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    background-color: var(--mat-sys-surface-variant) !important;
+    color: var(--mat-sys-on-surface-variant) !important;
+    border-color: var(--mat-sys-outline) !important;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
 }
 
 .description {
@@ -55,6 +124,16 @@
   white-space: pre-wrap;
 }
 
+.evaluation-title {
+  text-align: center;
+  margin: 1rem;
+  padding: 1rem;
+}
+
+.evaluation-title h1 {
+  margin: 0;
+}
+
 .footer {
   display: flex;
   justify-content: center;
@@ -62,11 +141,6 @@
   padding: 0 1rem;
   font-size: 0.85rem;
   opacity: 0.9;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
   height: 60px;
   line-height: 60px;
-  background-color: rgba(255, 255, 255, 0.95);
 }

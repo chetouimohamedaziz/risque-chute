@@ -1,18 +1,51 @@
-<mat-toolbar class="header">
-  <span class="header__title">{{ appWording.appTitle }}</span>
-  <span class="header__slogan">{{ appWording.selogan }}</span>
-</mat-toolbar>
+<div class="screen-card">
+  <mat-toolbar class="header">
+    <div class="header__content">
+      <img src="logo.png" alt="Logo" class="header__logo">
+      <span class="header__title">{{ appWording.appTitle }}</span>
+    </div>
+    <span class="header__slogan">{{ appWording.selogan }}</span>
+  </mat-toolbar>
 
-<main class="page-content">
-  <section class="description">
-    <span class="description__title">{{ appWording.appTitle }}</span> {{ appWording.description }}
-  </section>
+  <main class="page-content">
+    <section class="description">
+      <span class="description__title">{{ appWording.appTitle }}</span> {{ appWording.description }}
+    </section>
 
-  <section class="privacy-card">
-    <h2>{{ appWording.privacyTitle }}</h2>
-    <p>{{ appWording.privacyText }}</p>
-  </section>
-</main>
+    <section class="privacy-card">
+      <h2>{{ appWording.privacyTitle }}</h2>
+      <p>{{ appWording.privacyText }}</p>
+    </section>
+
+    <section class="evaluation-title">
+      <h1>{{ currentSectionTitle }}</h1>
+    </section>
+
+    @if (showQuestions) {
+      <section class="questionnaire">
+        @for (question of questions; track question.id; let i = $index) {
+          <app-question-step
+            [question]="question"
+            [currentIndex]="i"
+            (answered)="onAnswerSelected($event)"
+          ></app-question-step>
+        }
+      </section>
+    }
+
+    @if (!showQuestions) {
+      <section class="recommendations-list">
+        <app-recommendations [recommendations]="filteredRecommendations"></app-recommendations>
+      </section>
+    }
+
+    <section class="recommendations-section">
+      <button mat-button class="recommendations-button" [disabled]="showQuestions && !isAllQuestionsAnswered" (click)="showQuestions ? showRecommendations() : restartEvaluation()">
+        {{ buttonText }}
+      </button>
+    </section>
+  </main>
+</div>
 
 <footer class="footer">
   <span>© {{ appWording.appTitle }} - {{ appWording.appVersion }}</span>

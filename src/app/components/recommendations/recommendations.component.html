@@ -1,0 +1,12 @@
+<mat-card class="recommendations-card" appearance="outlined">
+    @if (recommendations.length > 0) {
+
+    <ul class="recommendations-card__list" aria-label="Liste des recommandations">
+        @for (recommendation of recommendations; track recommendation.id) {
+        <li class="recommendations-card__item">{{ recommendation.text }}</li>
+        }
+    </ul>
+    } @else {
+    <p class="recommendations-card__empty">{{ emptyMessage }}</p>
+    }
+</mat-card>
