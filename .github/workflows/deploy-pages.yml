@@ -3,7 +3,7 @@ name: Deploy To GitHub Pages
 on:
   push:
     branches:
-      - main
+      - master
   workflow_dispatch:
 
 permissions:
@@ -48,7 +48,7 @@ jobs:
           touch dist/risque-chute/browser/.nojekyll
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v5
+        uses: actions/upload-pages-artifact@v5.0.0
         with:
           path: dist/risque-chute/browser
 
