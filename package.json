@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:pages": "ng build --base-href /risque-chute/",
     "watch": "ng build --watch --configuration development",
     "check": "npm run lint && npm test",
     "lint": "eslint .",
