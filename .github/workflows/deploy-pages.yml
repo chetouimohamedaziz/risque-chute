@@ -47,13 +47,13 @@ jobs:
       - name: Prepare Pages artifact
         shell: bash
         run: |
-          cp dist/risque-chute/index.html dist/risque-chute/404.html
-          touch dist/risque-chute/.nojekyll
+          cp dist/risque-chute/browser/index.html dist/risque-chute/browser/404.html
+          touch dist/risque-chute/browser/.nojekyll
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist/risque-chute
+          path: dist/risque-chute/browser
 
   deploy:
     needs: build
