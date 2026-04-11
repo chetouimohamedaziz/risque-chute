@@ -5,8 +5,13 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:pages": "ng build --base-href /risque-chute/",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "check": "npm run lint && npm test",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "jest --config jest.config.js --coverage",
+    "test:watch": "jest --config jest.config.js --watch"
   },
   "prettier": {
     "printWidth": 100,
@@ -23,10 +28,12 @@
   "private": true,
   "packageManager": "npm@11.8.0",
   "dependencies": {
+    "@angular/cdk": "~21.1.5",
     "@angular/common": "^21.1.0",
     "@angular/compiler": "^21.1.0",
     "@angular/core": "^21.1.0",
     "@angular/forms": "^21.1.0",
+    "@angular/material": "~21.1.5",
     "@angular/platform-browser": "^21.1.0",
     "@angular/router": "^21.1.0",
     "rxjs": "~7.8.0",
@@ -36,8 +43,18 @@
     "@angular/build": "^21.1.4",
     "@angular/cli": "^21.1.4",
     "@angular/compiler-cli": "^21.1.0",
+    "@angular/platform-browser-dynamic": "^21.2.8",
+    "@eslint/js": "^10.0.1",
+    "@types/jest": "^30.0.0",
+    "angular-eslint": "^21.3.1",
+    "eslint": "^10.2.0",
+    "jest": "^30.3.0",
+    "jest-environment-jsdom": "^30.3.0",
+    "jest-preset-angular": "^16.1.4",
     "jsdom": "^27.1.0",
+    "ts-jest": "^29.4.9",
     "typescript": "~5.9.2",
-    "vitest": "^4.0.8"
+    "typescript-eslint": "^8.58.1",
+    "zone.js": "^0.16.1"
   }
 }
