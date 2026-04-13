@@ -1,10 +1,10 @@
 # RisqueChute
 
-Application Angular de sensibilisation et de recommandations autour du risque de chute chez les personnes agees.
+Application Angular de sensibilisation et de recommandations autour du risque de chute chez les personnes âgées.
 
-## Demarrage local
+## Démarrage local
 
-Installer les dependances puis lancer le serveur de developpement :
+Installer les dépendances puis lancer le serveur de développement :
 
 ```bash
 npm install
@@ -24,46 +24,55 @@ npm test
 npm run check
 ```
 
-Details :
+Détails :
 
-- `npm start` lance le serveur de developpement Angular.
-- `npm run build` genere la version de production dans `dist/risque-chute`.
-- `npm run build:pages` genere la version prete pour GitHub Pages avec le bon `base-href`.
-- `npm run lint` execute ESLint sur le projet.
-- `npm test` execute les tests Jest avec le rapport de couverture.
-- `npm run check` enchaine lint puis tests.
+- `npm start` lance le serveur de développement Angular.
+- `npm run build` génère la version de production dans `dist/risque-chute/browser`.
+- `npm run build:pages` génère la version prête pour GitHub Pages avec le bon `base-href`.
+- `npm run lint` exécute ESLint sur le projet.
+- `npm test` exécute les tests Jest avec le rapport de couverture.
+- `npm run check` enchaîne lint puis tests.
 
-## Deploiement automatique GitHub Pages
+## Déploiement automatique GitHub Pages
 
-Le depot contient deja le workflow [deploy-pages.yml](.github/workflows/deploy-pages.yml).
+Le dépôt contient déjà le workflow [.github/workflows/deploy-pages.yml](.github/workflows/deploy-pages.yml).
 
-Le deploiement est automatique sur chaque `push` vers la branche `main`. Le workflow fait les operations suivantes :
+Le déploiement est automatique sur chaque `push` vers la branche `master`. Le workflow fait les opérations suivantes :
 
-1. installe les dependances avec `npm ci` ;
-2. execute `npm run check` ;
+1. installe les dépendances avec `npm ci` ;
+2. exécute `npm run check` ;
 3. lance `npm run build:pages` ;
-4. publie le contenu de `dist/risque-chute` sur GitHub Pages.
+4. publie le contenu de `dist/risque-chute/browser` sur GitHub Pages.
 
-## Activation cote GitHub
+## Activation côté GitHub
 
-Dans le depot GitHub :
+Dans le dépôt GitHub :
 
 1. ouvrir `Settings` ;
 2. aller dans `Pages` ;
 3. choisir `Source: GitHub Actions`.
 
-Une fois active, l'application sera publiee sur l'URL suivante :
+Une fois activée, l'application sera publiée sur l'URL suivante :
 
 `https://chetouimohamedaziz.github.io/risque-chute/`
 
-## Qualite
+## Qualité
 
 Le projet utilise :
 
 - Angular 21 ;
 - ESLint pour le linting ;
 - Jest pour les tests ;
-- GitHub Actions pour le deploiement automatique.
+- GitHub Actions pour le déploiement automatique.
+
+## Version stable actuelle
+
+La version stable actuelle est `1.0.1`.
+
+### Correctif 1.0.1
+
+- Correction des accents manquants dans le wording français.
+- Aucun changement fonctionnel ni breaking change.
 
 ## Release Notes v1.0.0
 
