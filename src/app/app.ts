@@ -1,33 +1,77 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
 
-import { APP_WORDING } from './constants/app-wording.constant';
-import { QUESTIONS } from './constants/questions.constant';
-import { RECOMMENDATIONS } from './constants/recommendations.constant';
-import { QuestionStepComponent } from './components/question-step/question-step.component';
-import { Question } from './models/question.model';
-import { Recommendation } from './models/recommendation.model';
+import {
+  APP_WORDING_BY_LANGUAGE,
+  LANGUAGE_DIRECTIONS,
+  LANGUAGE_FLAGS,
+  LANGUAGE_LABELS,
+  SupportedLanguage,
+} from './constants/wording.constant';
+import { QUESTIONS_BY_LANGUAGE, RECOMMENDATIONS_BY_LANGUAGE } from './i18n';
+import { QuestionComponent } from './components/question/question.component';
+import { AnswerSelection, Question, Recommendation } from './models';
 import { RecommendationsComponent } from './components/recommendations/recommendations.component';
+import { EvaluationService } from './services/evaluation.service';
+import { ViewportService } from './services/viewport.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, MatToolbarModule, QuestionStepComponent, RecommendationsComponent],
+  imports: [
+    CommonModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatCardModule,
+    QuestionComponent,
+    RecommendationsComponent,
+  ],
   templateUrl: './app.html',
   styleUrls: ['./app.scss']
 })
 export class App {
-  protected readonly appWording = APP_WORDING;
-  protected readonly questions: Question[] = QUESTIONS.map(q => ({
-    id: q.id,
-    label: q.text,
-    options: ['Oui', 'Non']
-  }));
-  protected answers: { questionId: number; answer: string }[] = [];
+  private readonly evaluationService = inject(EvaluationService);
+  private readonly viewportService = inject(ViewportService);
+  protected readonly languageFlags = LANGUAGE_FLAGS;
+  protected readonly languageLabels = LANGUAGE_LABELS;
+  protected readonly availableLanguages: SupportedLanguage[] = ['fr', 'ar', 'en'];
+  protected selectedLanguage: SupportedLanguage = 'fr';
+  protected answers: AnswerSelection[] = [];
   protected showQuestions = true;
   protected buttonText = this.appWording.buttonShowRecommendations;
   protected filteredRecommendations: Recommendation[] = [];
+  protected riskScore = 0;
+
+  get isMobileViewport(): boolean {
+    return this.viewportService.isMobile();
+  }
+
+  get isTabletViewport(): boolean {
+    return this.viewportService.isTablet();
+  }
+
+  get isDesktopViewport(): boolean {
+    return this.viewportService.isDesktop();
+  }
+
+  get appWording() {
+    return APP_WORDING_BY_LANGUAGE[this.selectedLanguage];
+  }
+
+  get currentDirection() {
+    return LANGUAGE_DIRECTIONS[this.selectedLanguage];
+  }
+
+  get questions(): Question[] {
+    return QUESTIONS_BY_LANGUAGE[this.selectedLanguage].map(question => ({
+      id: question.id,
+      label: question.text,
+      options: [this.appWording.answerYes, this.appWording.answerNo],
+    }));
+  }
 
   get currentSectionTitle(): string {
     return this.showQuestions
@@ -39,20 +83,22 @@ export class App {
     return this.questions.length === this.answers.length;
   }
 
-  onAnswerSelected(event: { questionId: number; answer: string }): void {
-    const existingIndex = this.answers.findIndex(a => a.questionId === event.questionId);
-    if (existingIndex !== -1) {
-      this.answers[existingIndex] = event;
-    } else {
-      this.answers.push(event);
-    }
+  onAnswerSelected(event: AnswerSelection): void {
+    this.answers = this.evaluationService.upsertAnswer(this.answers, event);
+  }
+
+  onLanguageSelected(language: SupportedLanguage): void {
+    this.selectedLanguage = language;
+    this.restartEvaluation();
   }
 
   showRecommendations(): void {
-    this.filteredRecommendations = this.answers
-      .filter(a => a.answer === 'Oui')
-      .map(a => RECOMMENDATIONS.find(r => r.id === a.questionId))
-      .filter((r): r is Recommendation => !!r);
+    const evaluationResult = this.evaluationService.evaluate(
+      this.answers,
+      RECOMMENDATIONS_BY_LANGUAGE[this.selectedLanguage],
+    );
+    this.riskScore = evaluationResult.riskScore;
+    this.filteredRecommendations = evaluationResult.filteredRecommendations;
     this.showQuestions = false;
     this.buttonText = this.appWording.buttonRestartEvaluation;
   }
@@ -61,6 +107,7 @@ export class App {
     this.showQuestions = true;
     this.answers = [];
     this.filteredRecommendations = [];
+    this.riskScore = 0;
     this.buttonText = this.appWording.buttonShowRecommendations;
   }
 }

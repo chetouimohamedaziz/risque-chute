@@ -1,41 +1,162 @@
-.recommendations-card {
-    border-radius: 18px;
-    border: 1px solid #a9c8f1;
-    background: linear-gradient(180deg, #edf5ff 0%, #e7f0fb 100%);
+@use '../../../styles/index' as ui;
+
+@mixin risk-variant($bg-start, $bg-end, $border-color, $text-color) {
+    background: linear-gradient(180deg, $bg-start 0%, $bg-end 100%);
+    border-color: $border-color;
+
+    .risk-summary-card__text,
+    .risk-summary-card__score {
+        color: $text-color;
+    }
+}
+
+.risk-summary-card {
+    border-radius: ui.$radius-xl;
     box-shadow: none;
-    padding: 1.5rem;
+    margin: ui.$space-risk-card-y 0;
+    border: ui.$size-border-thin solid transparent;
+    width: 100%;
+    padding: ui.$space-risk-card-pad-y ui.$space-risk-card-pad-x;
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: ui.$space-risk-gap;
+        text-align: center;
+    }
+
+    &__body {
+        display: grid;
+        justify-items: center;
+        gap: ui.$space-risk-body-gap;
+    }
+
+    &__emoji {
+        font-size: ui.$font-size-emoji-lg;
+        line-height: 1;
+    }
+
+    &__text {
+        margin: 0;
+        font: var(--mat-sys-headline-small, 600 1.35rem/1.35 Roboto, sans-serif);
+    }
+
+    &__score {
+        margin: 0;
+        font: var(--mat-sys-title-medium, 500 1rem/1.3 Roboto, sans-serif);
+    }
+}
+
+.risk-summary-card--none {
+    @include risk-variant(
+        ui.$color-risk-none-surface-start,
+        ui.$color-risk-none-surface-end,
+        ui.$color-risk-none-border,
+        ui.$color-risk-none-text
+    );
+}
+
+.risk-summary-card--low {
+    @include risk-variant(
+        ui.$color-risk-low-surface-start,
+        ui.$color-risk-low-surface-end,
+        ui.$color-risk-low-border,
+        ui.$color-risk-low-text
+    );
+}
+
+.risk-summary-card--moderate {
+    @include risk-variant(
+        ui.$color-risk-moderate-surface-start,
+        ui.$color-risk-moderate-surface-end,
+        ui.$color-risk-moderate-border,
+        ui.$color-risk-moderate-text
+    );
+}
+
+.risk-summary-card--high {
+    @include risk-variant(
+        ui.$color-risk-high-surface-start,
+        ui.$color-risk-high-surface-end,
+        ui.$color-risk-high-border,
+        ui.$color-risk-high-text
+    );
+}
+
+.evaluation-title {
+    text-align: center;
+    margin: ui.$space-md;
+    padding: ui.$space-md;
+}
+
+.evaluation-title h1 {
+    margin: 0;
+    font: var(--mat-sys-headline-small, 600 1.5rem/1.25 Roboto, sans-serif);
+}
+
+.recommendations-card {
+    border-radius: ui.$radius-xl;
+    border: ui.$size-border-thin solid ui.$color-recommendations-border;
+    background: transparent;
+    box-shadow: none;
+    padding: ui.$space-xl;
 
     &__list {
-        margin: 1rem 0;
-        padding-left: 1.5rem;
+        margin: ui.$space-md 0;
+        padding-left: ui.$space-xl;
         display: grid;
-        gap: 0.9rem;
-        color: #173f69;
+        gap: ui.$space-list-gap;
+        color: ui.$color-recommendations-text;
     }
 
     &__item {
-        line-height: 1.6;
-        font-size: 1.05rem;
+        font: var(--mat-sys-body-large, 400 1rem/1.6 Roboto, sans-serif);
     }
 
     &__empty {
-        margin: 1rem 0;
-        color: #173f69;
-        line-height: 1.6;
-        font-size: 1rem;
+        margin: ui.$space-md 0;
+        color: ui.$color-recommendations-text;
+        font: var(--mat-sys-body-large, 400 1rem/1.6 Roboto, sans-serif);
     }
 }
 
 .recommendations-card__item::marker {
-    color: #3b74c7;
+    color: ui.$color-recommendations-border;
 }
 
-@media (max-width: 600px) {
+:host(.viewport-mobile) {
+    .risk-summary-card {
+        padding: ui.$space-risk-card-pad-mobile-y ui.$space-md;
+
+        &__text {
+            font-size: ui.$font-size-xl;
+        }
+
+        &__emoji {
+            font-size: ui.$font-size-emoji-md;
+        }
+
+        &__score {
+            font-size: ui.$font-size-base;
+        }
+    }
+
+    .evaluation-title {
+        margin: ui.$space-sm;
+        padding: ui.$space-sm;
+    }
+
+    .evaluation-title h1 {
+        font-size: ui.$font-size-title-lg;
+    }
+
     .recommendations-card {
-        padding: 1.1rem;
+        padding: ui.$space-card-mobile;
 
         &__item {
-            font-size: 1rem;
+            font-size: ui.$font-size-base;
         }
     }
 }

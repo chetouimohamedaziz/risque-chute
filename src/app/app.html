@@ -1,10 +1,32 @@
-<div class="screen-card">
+<div
+  class="screen-card mat-elevation-z4"
+  [class.viewport-mobile]="isMobileViewport"
+  [class.viewport-tablet]="isTabletViewport"
+  [class.viewport-desktop]="isDesktopViewport"
+  [attr.lang]="selectedLanguage"
+  [attr.dir]="currentDirection"
+>
   <mat-toolbar class="header">
     <div class="header__content">
       <img src="logo.png" alt="Logo" class="header__logo">
       <span class="header__title">{{ appWording.appTitle }}</span>
     </div>
     <span class="header__slogan">{{ appWording.selogan }}</span>
+    <div class="header__language-switch">
+      <label class="header__language" for="language-select">{{ appWording.languageLabel }}</label>
+      <select
+        id="language-select"
+        class="header__language-select"
+        [value]="selectedLanguage"
+        (change)="onLanguageSelected($any($event.target).value)"
+      >
+        @for (language of availableLanguages; track language) {
+          <option [value]="language">
+            {{ languageFlags[language] }} {{ languageLabels[language] }}
+          </option>
+        }
+      </select>
+    </div>
   </mat-toolbar>
 
   <main class="page-content">
@@ -12,41 +34,52 @@
       <span class="description__title">{{ appWording.appTitle }}</span> {{ appWording.description }}
     </section>
 
-    <section class="privacy-card">
+    <mat-card class="privacy-card mat-elevation-z1" appearance="filled">
       <h2>{{ appWording.privacyTitle }}</h2>
       <p>{{ appWording.privacyText }}</p>
-    </section>
+    </mat-card>
 
-    <section class="evaluation-title">
-      <h1>{{ currentSectionTitle }}</h1>
-    </section>
+    @if (showQuestions) {
+      <section class="evaluation-title">
+        <h1>{{ currentSectionTitle }}</h1>
+      </section>
+    }
 
     @if (showQuestions) {
       <section class="questionnaire">
         @for (question of questions; track question.id; let i = $index) {
-          <app-question-step
+          <app-question
             [question]="question"
             [currentIndex]="i"
             (answered)="onAnswerSelected($event)"
-          ></app-question-step>
+          ></app-question>
         }
       </section>
     }
 
     @if (!showQuestions) {
       <section class="recommendations-list">
-        <app-recommendations [recommendations]="filteredRecommendations"></app-recommendations>
+        <app-recommendations
+          [recommendations]="filteredRecommendations"
+          [score]="riskScore"
+          [language]="selectedLanguage"
+        ></app-recommendations>
       </section>
     }
 
     <section class="recommendations-section">
-      <button mat-button class="recommendations-button" [disabled]="showQuestions && !isAllQuestionsAnswered" (click)="showQuestions ? showRecommendations() : restartEvaluation()">
+      <button mat-raised-button color="primary" class="recommendations-button" [disabled]="showQuestions && !isAllQuestionsAnswered" (click)="showQuestions ? showRecommendations() : restartEvaluation()">
         {{ buttonText }}
       </button>
     </section>
   </main>
 </div>
 
-<footer class="footer">
+<footer
+  class="footer"
+  [class.viewport-mobile]="isMobileViewport"
+  [class.viewport-tablet]="isTabletViewport"
+  [class.viewport-desktop]="isDesktopViewport"
+>
   <span>© {{ appWording.appTitle }} - {{ appWording.appVersion }}</span>
 </footer>

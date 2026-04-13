@@ -2,10 +2,8 @@ import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { App } from './app';
-import { APP_WORDING } from './constants/app-wording.constant';
-import { QUESTIONS } from './constants/questions.constant';
-import { RECOMMENDATIONS } from './constants/recommendations.constant';
-import { RECOMMENDATIONS_WORDING } from './constants/recommendations-wording.constant';
+import { APP_WORDING, RECOMMENDATIONS_WORDING } from './constants/wording.constant';
+import { QUESTIONS, RECOMMENDATIONS } from './i18n';
 
 describe('App', () => {
   const createAppFixture = () => {
@@ -20,13 +18,13 @@ describe('App', () => {
 
   const answerAllQuestions = (
     fixture: ReturnType<typeof createAppFixture>,
-    answerSelector: (index: number) => 'Oui' | 'Non',
+    answerSelector: (index: number) => boolean,
   ) => {
-    const questionSteps = fixture.debugElement.queryAll(By.css('app-question-step'));
+    const questionSteps = fixture.debugElement.queryAll(By.css('app-question'));
 
     questionSteps.forEach((step, index) => {
       const buttons = step.queryAll(By.css('button'));
-      const buttonIndex = answerSelector(index) === 'Oui' ? 0 : 1;
+      const buttonIndex = answerSelector(index) ? 0 : 1;
 
       buttons[buttonIndex].triggerEventHandler('click');
     });
@@ -54,27 +52,27 @@ describe('App', () => {
     const compiled = fixture.nativeElement as HTMLElement;
 
     expect(compiled.querySelector('h1')?.textContent).toContain(APP_WORDING.evaluationTitle);
-    expect(compiled.querySelectorAll('app-question-step')).toHaveLength(QUESTIONS.length);
+    expect(compiled.querySelectorAll('app-question')).toHaveLength(QUESTIONS.length);
   });
 
   it('should update an answer instead of duplicating it', () => {
     const fixture = TestBed.createComponent(App);
     const app = fixture.componentInstance;
 
-    app.onAnswerSelected({ questionId: 1, answer: 'Oui' });
-    app.onAnswerSelected({ questionId: 1, answer: 'Non' });
+    app.onAnswerSelected({ questionId: 1, answer: true });
+    app.onAnswerSelected({ questionId: 1, answer: false });
 
     expect(app['answers']).toHaveLength(1);
-    expect(app['answers'][0]).toEqual({ questionId: 1, answer: 'Non' });
+    expect(app['answers'][0]).toEqual({ questionId: 1, answer: false });
   });
 
   it('should show only recommendations linked to answers set to Oui', () => {
     const fixture = TestBed.createComponent(App);
     const app = fixture.componentInstance;
 
-    app.onAnswerSelected({ questionId: 1, answer: 'Oui' });
-    app.onAnswerSelected({ questionId: 2, answer: 'Non' });
-    app.onAnswerSelected({ questionId: 3, answer: 'Oui' });
+    app.onAnswerSelected({ questionId: 1, answer: true });
+    app.onAnswerSelected({ questionId: 2, answer: false });
+    app.onAnswerSelected({ questionId: 3, answer: true });
 
     app.showRecommendations();
     fixture.detectChanges();
@@ -92,7 +90,7 @@ describe('App', () => {
     const fixture = TestBed.createComponent(App);
     const app = fixture.componentInstance;
 
-    app.onAnswerSelected({ questionId: 1, answer: 'Oui' });
+    app.onAnswerSelected({ questionId: 1, answer: true });
     app.showRecommendations();
     fixture.detectChanges();
 
@@ -106,7 +104,7 @@ describe('App', () => {
     const fixture = TestBed.createComponent(App);
     const app = fixture.componentInstance;
 
-    app.onAnswerSelected({ questionId: 1, answer: 'Oui' });
+    app.onAnswerSelected({ questionId: 1, answer: true });
     app.showRecommendations();
     app.restartEvaluation();
 
@@ -124,7 +122,7 @@ describe('App', () => {
     expect(app.isAllQuestionsAnswered).toBe(false);
 
     app['questions'].forEach((question: { id: number }) => {
-      app.onAnswerSelected({ questionId: question.id, answer: 'Oui' });
+      app.onAnswerSelected({ questionId: question.id, answer: true });
     });
 
     expect(app.isAllQuestionsAnswered).toBe(true);
@@ -138,7 +136,7 @@ describe('App', () => {
     expect(button.disabled).toBe(true);
 
     app['questions'].slice(0, app['questions'].length - 1).forEach((question: { id: number }) => {
-      app.onAnswerSelected({ questionId: question.id, answer: 'Oui' });
+      app.onAnswerSelected({ questionId: question.id, answer: true });
     });
     fixture.detectChanges();
 
@@ -146,7 +144,7 @@ describe('App', () => {
 
     app.onAnswerSelected({
       questionId: app['questions'][app['questions'].length - 1].id,
-      answer: 'Non'
+      answer: false
     });
     fixture.detectChanges();
 
@@ -156,7 +154,7 @@ describe('App', () => {
   it('should let the user answer through the UI and show matching recommendations after clicking the CTA', () => {
     const fixture = createAppFixture();
 
-    answerAllQuestions(fixture, (index) => (index % 2 === 0 ? 'Oui' : 'Non'));
+    answerAllQuestions(fixture, (index) => index % 2 === 0);
 
     const ctaButton = getCallToActionButton(fixture);
 
@@ -169,7 +167,7 @@ describe('App', () => {
     const renderedRecommendations = compiled.querySelectorAll('.recommendations-card__item');
 
     expect(compiled.querySelector('h1')?.textContent).toContain(APP_WORDING.recommendationsTitle);
-    expect(compiled.querySelectorAll('app-question-step')).toHaveLength(0);
+    expect(compiled.querySelectorAll('app-question')).toHaveLength(0);
     expect(renderedRecommendations).toHaveLength(6);
     expect(renderedRecommendations[0]?.textContent).toContain(RECOMMENDATIONS[0].text);
     expect(renderedRecommendations[1]?.textContent).toContain(RECOMMENDATIONS[2].text);
@@ -178,7 +176,7 @@ describe('App', () => {
   it('should render the empty recommendations message when every answer is Non', () => {
     const fixture = createAppFixture();
 
-    answerAllQuestions(fixture, () => 'Non');
+    answerAllQuestions(fixture, () => false);
 
     const ctaButton = getCallToActionButton(fixture);
     ctaButton.click();
@@ -195,7 +193,7 @@ describe('App', () => {
   it('should switch the CTA to restart and restore the questionnaire after a second click', () => {
     const fixture = createAppFixture();
 
-    answerAllQuestions(fixture, () => 'Oui');
+    answerAllQuestions(fixture, () => true);
 
     const ctaButton = getCallToActionButton(fixture);
 
@@ -209,7 +207,27 @@ describe('App', () => {
     const compiled = fixture.nativeElement as HTMLElement;
 
     expect(compiled.querySelector('h1')?.textContent).toContain(APP_WORDING.evaluationTitle);
-    expect(compiled.querySelectorAll('app-question-step')).toHaveLength(QUESTIONS.length);
+    expect(compiled.querySelectorAll('app-question')).toHaveLength(QUESTIONS.length);
     expect(compiled.querySelector('app-recommendations')).toBeNull();
+  });
+
+  it('should change language and reset evaluation state', () => {
+    const fixture = TestBed.createComponent(App);
+    const app = fixture.componentInstance;
+
+    app['answers'] = [{ questionId: 1, answer: true }];
+    app['filteredRecommendations'] = [{ id: 1, text: 'rec' }];
+    app['showQuestions'] = false;
+    app['riskScore'] = 3;
+    app['buttonText'] = 'Temp';
+
+    app.onLanguageSelected('en');
+
+    expect(app['selectedLanguage']).toBe('en');
+    expect(app['showQuestions']).toBe(true);
+    expect(app['answers']).toEqual([]);
+    expect(app['filteredRecommendations']).toEqual([]);
+    expect(app['riskScore']).toBe(0);
+    expect(app['buttonText']).toBe(app.appWording.buttonShowRecommendations);
   });
 });

@@ -11,5 +11,8 @@ module.exports = {
     '/src/main.ts',
     '/src/app/app.config.ts',
     '/src/app/app.routes.ts',
+    '/src/app/models/index.ts',
+    '/src/app/constants/questions.constant.ts',
+    '/src/app/constants/recommendations.constant.ts',
   ],
 };

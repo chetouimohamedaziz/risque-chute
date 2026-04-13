@@ -2,18 +2,18 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { QUESTION_MOCK } from '../../mocks/question.mock';
-import { QuestionStepComponent } from './question-step.component';
+import { QuestionComponent } from './question.component';
 
-describe('QuestionStepComponent', () => {
-  let component: QuestionStepComponent;
-  let fixture: ComponentFixture<QuestionStepComponent>;
+describe('QuestionComponent', () => {
+  let component: QuestionComponent;
+  let fixture: ComponentFixture<QuestionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [QuestionStepComponent],
+      imports: [QuestionComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(QuestionStepComponent);
+    fixture = TestBed.createComponent(QuestionComponent);
     component = fixture.componentInstance;
     component.question = QUESTION_MOCK;
     component.currentIndex = 0;
@@ -46,8 +46,8 @@ describe('QuestionStepComponent', () => {
     yesButton.triggerEventHandler('click');
     fixture.detectChanges();
 
-    expect(component.selectedOption).toBe('Oui');
-    expect(emitSpy).toHaveBeenCalledWith({ questionId: QUESTION_MOCK.id, answer: 'Oui' });
+    expect(component.selectedOption).toBe(true);
+    expect(emitSpy).toHaveBeenCalledWith({ questionId: QUESTION_MOCK.id, answer: true });
     expect(yesButton.nativeElement.classList).toContain('option-button--selected');
   });
 });

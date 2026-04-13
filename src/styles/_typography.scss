@@ -1,0 +1,3 @@
+@mixin fluid-type($min-size, $preferred-vw, $max-size) {
+  font-size: clamp($min-size, $preferred-vw, $max-size);
+}

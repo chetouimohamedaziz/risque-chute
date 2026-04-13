@@ -1,0 +1,45 @@
+@forward 'colors';
+@forward 'sizes';
+@forward 'motion-tokens';
+@forward 'elevation-tokens';
+@forward 'typography-tokens';
+
+@use 'colors' as c;
+@use 'sizes' as s;
+@use 'motion-tokens' as m;
+@use 'elevation-tokens' as e;
+
+// Legacy aliases kept for compatibility during transition.
+$brand-blue-dark: c.$color-brand-strong;
+$button-bg: c.$color-action-surface;
+$question-number-color: c.$color-action-strong;
+
+$card-shadow-sm: e.$shadow-surface-sm;
+$card-shadow-md: e.$shadow-surface-md;
+$card-shadow-lg: e.$shadow-surface-lg;
+$interactive-shadow: e.$shadow-interactive;
+
+$transition-base: m.$motion-transition-base;
+
+$recommendations-border: c.$color-recommendations-border;
+$recommendations-text: c.$color-recommendations-text;
+
+$risk-none-bg-start: c.$color-risk-none-surface-start;
+$risk-none-bg-end: c.$color-risk-none-surface-end;
+$risk-none-border: c.$color-risk-none-border;
+$risk-none-text: c.$color-risk-none-text;
+
+$risk-low-bg-start: c.$color-risk-low-surface-start;
+$risk-low-bg-end: c.$color-risk-low-surface-end;
+$risk-low-border: c.$color-risk-low-border;
+$risk-low-text: c.$color-risk-low-text;
+
+$risk-moderate-bg-start: c.$color-risk-moderate-surface-start;
+$risk-moderate-bg-end: c.$color-risk-moderate-surface-end;
+$risk-moderate-border: c.$color-risk-moderate-border;
+$risk-moderate-text: c.$color-risk-moderate-text;
+
+$risk-high-bg-start: c.$color-risk-high-surface-start;
+$risk-high-bg-end: c.$color-risk-high-surface-end;
+$risk-high-border: c.$color-risk-high-border;
+$risk-high-text: c.$color-risk-high-text;

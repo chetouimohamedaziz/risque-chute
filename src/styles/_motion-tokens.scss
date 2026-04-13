@@ -1,0 +1,5 @@
+@use 'units' as u;
+
+$motion-transition-base: 0.3s ease;
+$motion-lift-sm: u.rem(-1);
+$motion-lift-md: u.rem(-2);

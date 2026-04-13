@@ -1,4 +1,18 @@
-<mat-card class="recommendations-card" appearance="outlined">
+<mat-card class="risk-summary-card mat-elevation-z1" [class]="'risk-summary-card mat-elevation-z1 ' + riskClass" appearance="outlined">
+    <div class="risk-summary-card__content">
+        <span class="risk-summary-card__emoji" aria-hidden="true">{{ riskEmoji }}</span>
+        <div class="risk-summary-card__body">
+            <p class="risk-summary-card__text">{{ riskMessage }}</p>
+            <p class="risk-summary-card__score">{{ scoreLabel }} : {{ score }} / {{ totalQuestions }}</p>
+        </div>
+    </div>
+</mat-card>
+
+<section class="evaluation-title">
+    <h1>{{ recommendationsTitle }}</h1>
+</section>
+
+<mat-card class="recommendations-card mat-elevation-z2" appearance="outlined">
     @if (recommendations.length > 0) {
 
     <ul class="recommendations-card__list" aria-label="Liste des recommandations">

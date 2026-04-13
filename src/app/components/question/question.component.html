@@ -1,0 +1,22 @@
+<div class="question-card mat-elevation-z1">
+  <div class="question-header">
+    <div class="question-number">{{ currentIndex + 1 }}</div>
+    <div class="question-text">
+      {{ question.label }}
+    </div>
+  </div>
+
+  <div class="question-options">
+    @for (option of question.options; track $index) {
+      <button
+        mat-raised-button
+        [class.option-button--yes]="$index === 0"
+        [class.option-button--no]="$index === 1"
+        [class.option-button--selected]="selectedOption === ($index === 0)"
+        (click)="onAnswer($index === 0)"
+      >
+        {{ option }}
+      </button>
+    }
+  </div>
+</div>

@@ -1,0 +1,43 @@
+@use 'units' as u;
+
+$size-border-thin: u.rem(1);
+$size-border-strong: u.rem(2);
+
+$size-logo-default: u.rem(40);
+$size-logo-mobile: u.rem(34);
+$size-header-min-height: u.rem(64);
+$size-footer-height: u.rem(60);
+$size-footer-min-height: u.rem(56);
+$size-layout-max-width: u.rem(900);
+$size-cta-max-width: u.rem(380);
+$size-question-number: u.rem(32);
+$size-question-number-mobile: u.rem(28);
+$size-question-option-min: u.rem(250);
+$size-language-select-width: u.rem(132);
+$size-language-select-width-mobile: u.rem(144);
+$size-language-select-max-width: u.rem(220);
+
+$radius-sm: u.rem(8);
+$radius-md: u.rem(12);
+$radius-lg: u.rem(16);
+$radius-xl: u.rem(18);
+$radius-2xl: u.rem(24);
+
+$space-2xs: 0.25rem;
+$space-xs: 0.5rem;
+$space-sm: 0.75rem;
+$space-md: 1rem;
+$space-lg: 1.25rem;
+$space-xl: 1.5rem;
+$space-2xl: 2rem;
+$space-compact: 0.85rem;
+$space-tight: 0.7rem;
+$space-card-mobile: 1.1rem;
+$space-risk-card-y: 2rem;
+$space-risk-gap: 0.45rem;
+$space-risk-body-gap: 0.35rem;
+$space-list-gap: 0.9rem;
+$space-risk-card-pad-y: 1.6rem;
+$space-risk-card-pad-x: 1.2rem;
+$space-risk-card-pad-mobile-y: 1.3rem;
+
