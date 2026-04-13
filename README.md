@@ -54,7 +54,29 @@ Dans le dépôt GitHub :
 
 Une fois activée, l'application sera publiée sur l'URL suivante :
 
+`https://vigil-age.com`
+
+URL technique GitHub Pages (fallback) :
+
 `https://chetouimohamedaziz.github.io/risque-chute/`
+
+## Domaine personnalisé (IONOS)
+
+Le dépôt inclut `public/CNAME` avec la valeur `vigil-age.com`.
+
+Configurer les DNS chez IONOS avec :
+
+- `A` `@` -> `185.199.108.153`
+- `A` `@` -> `185.199.109.153`
+- `A` `@` -> `185.199.110.153`
+- `A` `@` -> `185.199.111.153`
+- `CNAME` `www` -> `chetouimohamedaziz.github.io`
+
+Ensuite, dans GitHub (`Settings` -> `Pages`) :
+
+1. vérifier que le `Custom domain` est `vigil-age.com` ;
+2. attendre l'émission du certificat ;
+3. activer `Enforce HTTPS`.
 
 ## Qualité
 
