@@ -44,39 +44,7 @@ Le déploiement est automatique sur chaque `push` vers la branche `master`. Le w
 3. lance `npm run build:pages` ;
 4. publie le contenu de `dist/risque-chute/browser` sur GitHub Pages.
 
-## Activation côté GitHub
-
-Dans le dépôt GitHub :
-
-1. ouvrir `Settings` ;
-2. aller dans `Pages` ;
-3. choisir `Source: GitHub Actions`.
-
-Une fois activée, l'application sera publiée sur l'URL suivante :
-
-`https://vigil-age.com`
-
-URL technique GitHub Pages (fallback) :
-
-`https://chetouimohamedaziz.github.io/risque-chute/`
-
-## Domaine personnalisé (IONOS)
-
-Le dépôt inclut `public/CNAME` avec la valeur `vigil-age.com`.
-
-Configurer les DNS chez IONOS avec :
-
-- `A` `@` -> `185.199.108.153`
-- `A` `@` -> `185.199.109.153`
-- `A` `@` -> `185.199.110.153`
-- `A` `@` -> `185.199.111.153`
-- `CNAME` `www` -> `chetouimohamedaziz.github.io`
-
-Ensuite, dans GitHub (`Settings` -> `Pages`) :
-
-1. vérifier que le `Custom domain` est `vigil-age.com` ;
-2. attendre l'émission du certificat ;
-3. activer `Enforce HTTPS`.
+L'application est accessible sur : `https://vigil-age.com`
 
 ## Qualité
 
@@ -89,7 +57,15 @@ Le projet utilise :
 
 ## Version stable actuelle
 
-La version stable actuelle est `1.0.1`.
+La version stable actuelle est `1.0.2`.
+
+### Correctif 1.0.2
+
+- Mise à jour complète des traductions en français, anglais et arabe :
+  - **Description détaillée** avec présentation des 12 questions et du système de scoring.
+  - **Questions réformulées** pour cohérence structurelle et linguistique entre les trois langues.
+- Augmentation de la largeur maximale du conteneur (900px → 950px) pour l'affichage optimal des questions longues.
+- Aucun changement fonctionnel ni breaking change.
 
 ### Correctif 1.0.1
 
